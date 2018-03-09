@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         int row = grid.getRowCount();
 
         inicializarGrid(grid,col,row);
-        Figura triangulo = new Linea();
+        Figura triangulo = new LDerecha();
         figura_actual = triangulo;
 
         matriz_logica= new int[row-1][col-2];

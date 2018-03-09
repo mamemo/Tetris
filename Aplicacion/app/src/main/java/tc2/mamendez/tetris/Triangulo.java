@@ -37,58 +37,6 @@ public class Triangulo extends Figura {
     }
 
     @Override
-    public void mover_derecha(int[][] logica) {
-        limpiar_Posiciones(logica);
-
-        boolean accept = true;
-        for (int i = 0; i < Posiciones.length; i++) {
-            if (Posiciones[i][1] == logica[0].length - 1 || logica[Posiciones[i][0]][Posiciones[i][1] + 1] != 0)
-                accept = false;
-        }
-
-        if (accept)
-            for (int i = 0; i < Posiciones.length; i++) {
-                Posiciones[i][1] += 1;
-            }
-        actualizar_Posiciones(logica);
-    }
-
-    @Override
-    public void mover_izquierda(int[][] logica) {
-        limpiar_Posiciones(logica);
-
-        boolean accept = true;
-        for (int i = 0; i < Posiciones.length; i++) {
-            if (Posiciones[i][1] == 0 || logica[Posiciones[i][0]][Posiciones[i][1] - 1] != 0)
-                accept = false;
-        }
-
-        if (accept)
-            for (int i = 0; i < Posiciones.length; i++) {
-                Posiciones[i][1] -= 1;
-            }
-        actualizar_Posiciones(logica);
-    }
-
-    @Override
-    public void mover_abajo(int[][] logica) {
-        limpiar_Posiciones(logica);
-
-        boolean accept = true;
-        for (int i = 0; i < Posiciones.length; i++) {
-            if (Posiciones[i][0] == logica.length - 1 || logica[Posiciones[i][0] + 1][Posiciones[i][1]] != 0)
-                accept = false;
-        }
-
-        if (accept)
-            for (int i = 0; i < Posiciones.length; i++) {
-                Posiciones[i][0] += 1;
-            }
-        actualizar_Posiciones(logica);
-
-    }
-
-    @Override
     public void rotar(int[][] logica) {
         limpiar_Posiciones(logica);
 
