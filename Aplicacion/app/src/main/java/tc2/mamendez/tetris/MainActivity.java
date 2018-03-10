@@ -3,6 +3,7 @@ package tc2.mamendez.tetris;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     boolean oportunidad = true;
     int score = 0;
     int puntaje_por_linea = 100;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
+        mediaPlayer = MediaPlayer.create(this, R.raw.moonlight8bit);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
 
         jugar();
 
@@ -140,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
         dlgAlert.setPositiveButton("Play Again?",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        mediaPlayer.stop();
                         Intent intent = getIntent();
                         finish();
                         startActivity(intent);
