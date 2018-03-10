@@ -1,8 +1,11 @@
 package tc2.mamendez.tetris;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,15 +57,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
+
+
+        jugar();
+
+    }
+
+    public void jugar(){
+        score = 0;
         final TextView txt_score = findViewById(R.id.score);
         txt_score.setText(Integer.toString(score));
-
         GridLayout grid = findViewById(R.id.gridLayout);
         int col = grid.getColumnCount();
         int row = grid.getRowCount();
 
         inicializarGrid(grid, col, row);
         matriz_logica = new int[row - 1][col - 2];
+        actualizar_grid();
 
         crearFigura();
 
@@ -71,43 +85,45 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 runOnUiThread(new Runnable() {
                     public void run() {
-                        figura_actual.mover_abajo(matriz_logica);
-                        actualizar_grid();
-                        if (pararFigura()) {
-                            lineas_horizontales();
-                            txt_score.setText(Integer.toString(score));
-                            //lineas_verticales();
-                            crearFigura();
+                        if (!figura_actual.mover_abajo(matriz_logica)) {
+                            parar_Juego();
+                            t.cancel();
+                        } else {
+                            actualizar_grid();
+                            if (pararFigura()) {
+                                lineas_horizontales();
+                                txt_score.setText(Integer.toString(score));
+                                crearFigura();
+                            }
                         }
                     }
                 });
 
             }
         }, 1000, 1000);
-
     }
 
-    public void lineas_horizontales(){
+    public void lineas_horizontales() {
         ArrayList<Integer> rows = new ArrayList<>();
         int cont;
-        for (int i = 0; i < matriz_logica.length; i++){
+        for (int i = 0; i < matriz_logica.length; i++) {
             cont = 0;
-            for (int j = 0; j<matriz_logica[i].length; j++){
-                if(matriz_logica[i][j]!=0)
+            for (int j = 0; j < matriz_logica[i].length; j++) {
+                if (matriz_logica[i][j] != 0)
                     cont++;
             }
-            if(cont == matriz_logica[i].length)
+            if (cont == matriz_logica[i].length)
                 rows.add(i);
         }
 
-        for(Integer row : rows){
-            for(int j =0; j<matriz_logica[row].length; j++){
+        for (Integer row : rows) {
+            for (int j = 0; j < matriz_logica[row].length; j++) {
                 matriz_logica[row][j] = 0;
             }
-            for(int i = row-1; i>=0; i-- ){
-                for(int j=0; j<matriz_logica[i].length; j++){
-                    if(matriz_logica[i][j] != 0){
-                        matriz_logica[i+1][j] = matriz_logica[i][j];
+            for (int i = row - 1; i >= 0; i--) {
+                for (int j = 0; j < matriz_logica[i].length; j++) {
+                    if (matriz_logica[i][j] != 0) {
+                        matriz_logica[i + 1][j] = matriz_logica[i][j];
                         matriz_logica[i][j] = 0;
                     }
                 }
@@ -117,9 +133,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void parar_Juego() {
+        final AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        dlgAlert.setMessage("Score: "+Integer.toString(score));
+        dlgAlert.setTitle("GAME OVER!");
+        dlgAlert.setPositiveButton("Play Again?",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = getIntent();
+                        finish();
+                        startActivity(intent);
+                    }
+                });
+        dlgAlert.setCancelable(true);
+        dlgAlert.create().show();
+    }
+
     public void crearFigura() {
         figura_actual = null;
-        switch (new Random().nextInt(7)){
+        switch (new Random().nextInt(7)) {
             case 0:
                 figura_actual = new Cuadrado();
                 break;
@@ -147,11 +179,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean pararFigura() {
-        if (figura_actual.hayDebajo(matriz_logica)){
-            if(oportunidad){
+        if (figura_actual.hayDebajo(matriz_logica)) {
+            if (oportunidad) {
                 oportunidad = false;
                 return false;
-            }else{
+            } else {
                 oportunidad = true;
                 return true;
             }

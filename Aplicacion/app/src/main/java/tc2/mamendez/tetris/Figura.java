@@ -17,6 +17,7 @@ public abstract class Figura {
     Random random = new Random();
     int color = random.nextInt(4) + 1;
     int estado = 0;
+    int movimientos = 0;
 
     public abstract void iniciar_figura(int[][] logica);
 
@@ -52,7 +53,7 @@ public abstract class Figura {
         actualizar_Posiciones(logica);
     }
 
-    public void mover_abajo(int[][] logica) {
+    public boolean mover_abajo(int[][] logica) {
         limpiar_Posiciones(logica);
 
         boolean accept = true;
@@ -61,12 +62,19 @@ public abstract class Figura {
                 accept = false;
         }
 
-        if (accept)
+        if (accept) {
             for (int i = 0; i < Posiciones.length; i++) {
                 Posiciones[i][0] += 1;
             }
-        actualizar_Posiciones(logica);
+            movimientos++;
+        }
 
+        if(movimientos == 0){
+            return false;
+        }
+
+        actualizar_Posiciones(logica);
+        return true;
     }
 
     public abstract void rotar(int[][] logica);
