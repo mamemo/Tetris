@@ -2,23 +2,16 @@ package tc2.mamendez.tetris;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.os.CountDownTimer;
-import android.os.Handler;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -60,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mediaPlayer = MediaPlayer.create(this, R.raw.moonlight8bit);
+
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
 
@@ -67,10 +61,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        mediaPlayer.stop();
+    }
+
+    @Override
+    protected void onStop() {
+        if(mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+        }
+        super.onStop();
+    }
+
     public void jugar(){
         score = 0;
         final TextView txt_score = findViewById(R.id.score);
-        txt_score.setText(Integer.toString(score));
+        txt_score.setText("Score: "+Integer.toString(score));
         GridLayout grid = findViewById(R.id.gridLayout);
         int col = grid.getColumnCount();
         int row = grid.getRowCount();
@@ -94,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             actualizar_grid();
                             if (pararFigura()) {
                                 lineas_horizontales();
-                                txt_score.setText(Integer.toString(score));
+                                txt_score.setText("Score: "+Integer.toString(score));
                                 crearFigura();
                             }
                         }

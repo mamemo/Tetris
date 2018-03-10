@@ -27,10 +27,7 @@ public class LDerecha extends Figura {
         Posiciones[3][0] = 0;
         Posiciones[3][1] = posicion_inicial + 1;
 
-        logica[1][posicion_inicial-1] = color;
-        logica[0][posicion_inicial-1] = color;
-        logica[0][posicion_inicial] = color;
-        logica[0][posicion_inicial +1] = color;
+        actualizar_Posiciones(logica);
     }
 
     @Override

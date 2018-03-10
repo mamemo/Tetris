@@ -1,8 +1,5 @@
 package tc2.mamendez.tetris;
 
-import android.widget.GridLayout;
-import android.widget.ImageView;
-
 import java.util.ArrayList;
 
 /**
@@ -30,10 +27,7 @@ public class Triangulo extends Figura {
         Posiciones[3][0] = 1;
         Posiciones[3][1] = posicion_inicial + 1;
 
-        logica[0][posicion_inicial] = color;
-        logica[1][posicion_inicial - 1] = color;
-        logica[1][posicion_inicial] = color;
-        logica[1][posicion_inicial + 1] = color;
+        actualizar_Posiciones(logica);
     }
 
     @Override

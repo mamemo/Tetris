@@ -1,7 +1,6 @@
 package tc2.mamendez.tetris;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Mauro on 3/9/2018.
@@ -27,10 +26,7 @@ public class Linea extends Figura {
         Posiciones[3][0] = 0;
         Posiciones[3][1] = posicion_inicial + 2;
 
-        logica[0][posicion_inicial - 1] = color;
-        logica[0][posicion_inicial] = color;
-        logica[0][posicion_inicial + 1] = color;
-        logica[0][posicion_inicial + 2] = color;
+        actualizar_Posiciones(logica);
     }
 
 

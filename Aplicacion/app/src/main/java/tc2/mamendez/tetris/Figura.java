@@ -1,11 +1,5 @@
 package tc2.mamendez.tetris;
 
-import android.widget.GridLayout;
-import android.widget.ImageView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Random;
 
 /**

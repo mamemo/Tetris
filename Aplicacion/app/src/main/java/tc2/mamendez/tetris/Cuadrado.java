@@ -1,7 +1,5 @@
 package tc2.mamendez.tetris;
 
-import java.util.ArrayList;
-
 /**
  * Created by Mauro on 3/9/2018.
  */
