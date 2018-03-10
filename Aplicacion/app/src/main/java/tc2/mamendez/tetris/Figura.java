@@ -4,6 +4,8 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 /**
@@ -13,7 +15,7 @@ import java.util.Random;
 public abstract class Figura {
     int[][] Posiciones = new int[4][2];
     Random random = new Random();
-    int color = random.nextInt(4)+1;
+    int color = random.nextInt(4) + 1;
     int estado = 0;
 
     public abstract void iniciar_figura(int[][] logica);
@@ -66,19 +68,40 @@ public abstract class Figura {
         actualizar_Posiciones(logica);
 
     }
+
     public abstract void rotar(int[][] logica);
 
-    public void limpiar_Posiciones(int[][] logica){
+    public void limpiar_Posiciones(int[][] logica) {
         logica[Posiciones[0][0]][Posiciones[0][1]] = 0;
         logica[Posiciones[1][0]][Posiciones[1][1]] = 0;
         logica[Posiciones[2][0]][Posiciones[2][1]] = 0;
         logica[Posiciones[3][0]][Posiciones[3][1]] = 0;
     }
 
-    public void actualizar_Posiciones(int[][] logica){
+    public void actualizar_Posiciones(int[][] logica) {
         logica[Posiciones[0][0]][Posiciones[0][1]] = color;
         logica[Posiciones[1][0]][Posiciones[1][1]] = color;
         logica[Posiciones[2][0]][Posiciones[2][1]] = color;
         logica[Posiciones[3][0]][Posiciones[3][1]] = color;
+    }
+
+    public boolean hayDebajo(int[][] logica) {
+        for (int i = 0; i < Posiciones.length; i++) {
+            if (Posiciones[i][0] + 1 < logica.length) {
+                if (logica[Posiciones[i][0] + 1][Posiciones[i][1]] != 0 && !parteDeFigura(Posiciones[i][0] + 1, Posiciones[i][1]))
+                    return true;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean parteDeFigura(int x, int y) {
+        for (int[] posicion : Posiciones) {
+            if (posicion[0] == x && posicion[1] == y)
+                return true;
+        }
+        return false;
     }
 }

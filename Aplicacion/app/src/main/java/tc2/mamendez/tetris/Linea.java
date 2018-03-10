@@ -57,7 +57,6 @@ public class Linea extends Figura {
         }
         ArrayList<Integer> contenido = new ArrayList<>();
         for (int[] coordenada : coordenadas) {
-            System.out.println(Arrays.toString(coordenada));
             if (coordenada[1] < 0 || coordenada[1] > logica[1].length - 1 || coordenada[0] > logica.length || coordenada[0] < 0 || logica[coordenada[0]][coordenada[1]] != 0)
                 accept = false;
         }
