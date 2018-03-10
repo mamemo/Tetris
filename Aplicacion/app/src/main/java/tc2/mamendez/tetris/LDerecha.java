@@ -73,7 +73,7 @@ public class LDerecha extends Figura {
             if (coordenada[1] < 0 || coordenada[1] > logica[1].length - 1 || coordenada[0] > logica.length-1 || coordenada[0] < 0 || logica[coordenada[0]][coordenada[1]] != 0)
                 accept = false;
         }
-        
+
         if (accept)
             switch (estado) {
                 case 0:
